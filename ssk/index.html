@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>lizos_ssk — Королева Доты</title>
+<style>
+:root{--accent:#ff2e63;--accent2:#ffb347;--accent3:#8a5cff;--bg:#060608;--fg:#f5f5f5;--muted:#777}
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{background:var(--bg);color:var(--fg);font-family:'Inter',-apple-system,'Segoe UI',sans-serif;overflow-x:hidden;scroll-behavior:smooth}
+body::before{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.5'/%3E%3C/svg%3E");opacity:.07;pointer-events:none;z-index:200;mix-blend-mode:overlay}
+.spotlight{position:fixed;width:500px;height:500px;border-radius:50%;background:radial-gradient(circle,rgba(255,46,99,.18),transparent 65%);pointer-events:none;z-index:1;transform:translate(-50%,-50%);filter:blur(40px);left:-9999px;top:-9999px}
+.glow{position:fixed;border-radius:50%;filter:blur(180px);z-index:-1;pointer-events:none;opacity:.35}
+.g1{width:600px;height:600px;background:var(--accent);top:-200px;right:-200px;animation:f1 14s ease-in-out infinite}
+.g2{width:500px;height:500px;background:var(--accent3);bottom:20%;left:-200px;animation:f2 18s ease-in-out infinite}
+.g3{width:400px;height:400px;background:var(--accent2);top:50%;right:10%;animation:f1 20s ease-in-out infinite reverse}
+@keyframes f1{0%,100%{transform:translate(0,0) scale(1)}50%{transform:translate(-100px,80px) scale(1.2)}}
+@keyframes f2{0%,100%{transform:translate(0,0) scale(1)}50%{transform:translate(120px,-60px) scale(1.15)}}
+.wrap{max-width:960px;margin:0 auto;padding:3rem 1.5rem;position:relative;z-index:2}
+.top-links{display:flex;flex-wrap:wrap;gap:.7rem;justify-content:center;margin-bottom:2rem}
+.top-links a{display:inline-flex;align-items:center;gap:.5rem;padding:.6rem 1.2rem;border:1px solid #262626;border-radius:100px;background:#0d0d10;color:#ddd;text-decoration:none;font-size:.85rem;font-weight:600;transition:.3s}
+.top-links a:hover{border-color:var(--accent);color:#fff;transform:translateY(-3px)}
+.top-links svg{width:16px;height:16px;fill:currentColor}
+.twitch svg{color:#a970ff}.tg svg{color:#29b6f6}.dm svg{color:var(--accent)}
+.lamp{position:relative;display:inline-block;margin-top:1.8rem;padding:1.2rem 2rem;border-radius:16px;background:#08080a;border:1px solid #141418;cursor:crosshair;overflow:hidden;transition:.6s cubic-bezier(.2,.8,.2,1);user-select:none}
+.lamp::before{content:'';position:absolute;top:50%;left:50%;width:0;height:0;transform:translate(-50%,-50%);border-radius:50%;background:radial-gradient(circle,rgba(255,46,99,.55),rgba(255,179,71,.35) 30%,transparent 60%);filter:blur(20px);transition:.7s cubic-bezier(.2,.8,.2,1);pointer-events:none;opacity:0}
+.lamp:hover{border-color:rgba(255,46,99,.5);box-shadow:0 0 40px -10px rgba(255,46,99,.5),inset 0 0 30px rgba(255,46,99,.08)}
+.lamp:hover::before{width:400px;height:200px;opacity:1;animation:lampFlicker 2s ease-in-out infinite}
+@keyframes lampFlicker{0%,100%{opacity:.85}45%{opacity:1}55%{opacity:.7}}
+.lamp-text{position:relative;font-size:.95rem;font-weight:800;letter-spacing:.15em;text-transform:uppercase;color:transparent;transition:.6s ease;z-index:2}
+.lamp:hover .lamp-text{color:#fff;text-shadow:0 0 10px rgba(255,46,99,.9),0 0 20px rgba(255,46,99,.6),0 0 40px rgba(255,46,99,.3);animation:textGlow 1.8s ease-in-out infinite}
+@keyframes textGlow{0%,100%{text-shadow:0 0 10px rgba(255,46,99,.9),0 0 20px rgba(255,46,99,.6),0 0 40px rgba(255,46,99,.3)}50%{text-shadow:0 0 15px rgba(255,179,71,1),0 0 30px rgba(255,46,99,.8),0 0 60px rgba(255,46,99,.5)}}
+.lamp .hint{display:block;font-size:.6rem;font-weight:600;letter-spacing:.3em;color:#252528;margin-top:.4rem;text-transform:uppercase;transition:.4s}
+.lamp:hover .hint{color:#8a1a3a}
+@media(max-width:600px){.lamp{padding:1rem 1.4rem}.lamp-text{font-size:.8rem}}
+.hero{min-height:70vh;display:flex;flex-direction:column;justify-content:center;position:relative}
+.eyebrow{font-size:.7rem;letter-spacing:.5em;text-transform:uppercase;color:var(--muted);margin-bottom:1.5rem}
+.hero-title{display:flex;align-items:center;gap:1.5rem;flex-wrap:wrap}
+.hero-title h1{font-size:clamp(3rem,20vw,10rem);font-weight:900;line-height:.85;letter-spacing:-.06em;text-transform:uppercase;background:linear-gradient(120deg,#fff 20%,var(--accent) 45%,var(--accent2) 70%,var(--accent3) 95%);background-size:300% 300%;-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;animation:shine 8s ease infinite}
+@keyframes shine{0%,100%{background-position:0% 50%}50%{background-position:100% 50%}}
+.hero-photo{width:clamp(90px,18vw,170px);height:clamp(70px,14vw,130px);border-radius:16px;overflow:hidden;flex-shrink:0;background:linear-gradient(135deg,var(--accent),var(--accent3));display:flex;align-items:center;justify-content:center;font-size:clamp(1rem,3vw,1.5rem);font-weight:900;color:#fff;text-transform:uppercase;border:3px solid rgba(255,255,255,.25);box-shadow:0 0 25px rgba(255,46,99,.6),0 0 55px rgba(138,92,255,.4);animation:pp 4s ease-in-out infinite}
+.hero-photo img{width:100%;height:100%;object-fit:cover;display:block}
+@keyframes pp{0%,100%{transform:scale(1)}50%{transform:scale(1.06)}}
+.sub{font-size:clamp(1rem,3vw,1.25rem);color:var(--muted);margin-top:1.5rem;max-width:520px;border-left:2px solid var(--accent);padding-left:1rem}
+.crown{display:inline-block;font-size:clamp(.8rem,2.5vw,1.1rem);letter-spacing:.35em;text-transform:uppercase;color:var(--accent2);margin-top:1.2rem;padding:.5rem 1.2rem;border:1px solid rgba(255,179,71,.35);border-radius:100px;background:rgba(255,179,71,.06);width:fit-content;animation:cg 3s ease-in-out infinite}
+@keyframes cg{0%,100%{box-shadow:0 0 10px rgba(255,179,71,.15)}50%{box-shadow:0 0 25px rgba(255,179,71,.45)}}
+.btn-meyn{display:inline-block;margin-top:1.5rem;padding:.8rem 1.8rem;background:linear-gradient(135deg,var(--accent),var(--accent3));color:#fff;border-radius:100px;text-decoration:none;font-weight:700;font-size:.9rem;letter-spacing:.15em;text-transform:uppercase;transition:.3s;width:fit-content}
+.btn-meyn:hover{transform:translateY(-3px);box-shadow:0 15px 35px -15px var(--accent)}
+.saturn{position:relative;width:100%;height:520px;display:flex;align-items:center;justify-content:center;margin:2rem 0;overflow:visible;background:radial-gradient(circle at 50% 50%,rgba(255,46,99,.28),transparent 55%),radial-gradient(circle at 50% 50%,rgba(138,92,255,.18),transparent 70%);border-radius:50%}
+.saturn::before{content:'';position:absolute;width:600px;height:600px;border-radius:50%;background:radial-gradient(circle,rgba(255,46,99,.25),rgba(138,92,255,.15) 40%,transparent 70%);filter:blur(100px);animation:sp 6s ease-in-out infinite;pointer-events:none;z-index:0}
+@keyframes sp{0%,100%{transform:scale(1);opacity:.6}50%{transform:scale(1.15);opacity:.9}}
+.saturn-photo{position:relative;width:180px;height:180px;border-radius:50%;z-index:10;background:linear-gradient(135deg,var(--accent),var(--accent3));display:flex;align-items:center;justify-content:center;font-size:4.5rem;font-weight:900;color:#fff;border:3px solid rgba(255,255,255,.25);box-shadow:0 0 40px rgba(255,46,99,.7),0 0 90px rgba(138,92,255,.5);animation:pp 4s ease-in-out infinite;overflow:hidden}
+.saturn-photo img{width:100%;height:100%;object-fit:cover;border-radius:50%;display:block}
+.ring{position:absolute;top:50%;left:50%;width:0;height:0;pointer-events:none}
+.ring-1{animation:spin 16s linear infinite}
+.ring-2{animation:spin 24s linear infinite reverse}
+@keyframes spin{from{transform:rotate(0)}to{transform:rotate(360deg)}}
+.ring .word{position:absolute;top:0;left:0;font-size:1rem;font-weight:900;letter-spacing:.15em;text-transform:uppercase;color:#fff;white-space:nowrap;padding:.5rem 1.1rem;text-shadow:0 0 10px var(--accent),0 0 20px var(--accent);filter:drop-shadow(0 0 8px rgba(255,46,99,.8))}
+.ring .word span{display:inline-block}
+.ring-1 .word span{animation:cs 16s linear infinite}
+.ring-2 .word span{animation:cs 24s linear infinite reverse}
+@keyframes cs{from{transform:rotate(0)}to{transform:rotate(-360deg)}}
+.block{margin:6rem 0;position:relative}
+.num{font-size:.7rem;letter-spacing:.5em;color:var(--accent);text-transform:uppercase;margin-bottom:1rem;display:block}
+h2{font-size:clamp(1.8rem,7vw,3.5rem);font-weight:800;line-height:1;letter-spacing:-.03em;margin-bottom:1.5rem}
+h2 em{font-style:normal;color:var(--accent)}
+p{color:#bbb;font-size:1.05rem;line-height:1.7;max-width:640px}
+p+p{margin-top:1rem}
+.words{display:flex;flex-wrap:wrap;gap:.7rem;margin-top:2rem}
+.words span{padding:.55rem 1.2rem;border:1px solid #262626;border-radius:100px;font-size:.9rem;color:#ddd;transition:.3s}
+.words span:hover{border-color:var(--accent);color:#fff;transform:translateY(-3px)}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:1rem;margin-top:2.5rem}
+.stat{background:#0d0d10;border:1px solid #1a1a1a;border-radius:16px;padding:1.5rem 1rem;text-align:center;transition:.3s}
+.stat:hover{border-color:var(--accent);transform:translateY(-4px)}
+.stat .val{font-size:2rem;font-weight:900;background:linear-gradient(120deg,var(--accent),var(--accent2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.stat .lbl{font-size:.7rem;letter-spacing:.2em;color:var(--muted);text-transform:uppercase;margin-top:.4rem}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:.6rem;margin-top:2rem}
+.card{background:#0d0d10;border:1px solid #1a1a1a;border-radius:14px;padding:1rem;transition:.35s}
+.card:hover{transform:translateY(-4px) scale(1.02);border-color:var(--accent);box-shadow:0 20px 40px -20px var(--accent)}
+.card .nick{font-weight:700;font-size:.95rem}
+.card .role{font-size:.72rem;color:var(--muted);margin-top:.2rem}
+.timeline{position:relative;margin-top:2.5rem;padding-left:2rem;border-left:1px solid #1f1f1f}
+.tl-item{position:relative;padding-bottom:2rem}
+.tl-item::before{content:'';position:absolute;left:-2.4rem;top:.4rem;width:10px;height:10px;border-radius:50%;background:var(--accent);box-shadow:0 0 20px var(--accent)}
+.tl-item .year{font-size:.75rem;letter-spacing:.3em;color:var(--accent);text-transform:uppercase}
+.tl-item .txt{margin-top:.4rem;color:#ccc}
+.tl-item .txt b{color:#fff}
+.statuses{display:flex;flex-wrap:wrap;gap:.6rem;margin-top:1.5rem}
+.st{padding:.7rem 1.3rem;border-radius:100px;background:#0d0d10;border:1px solid #1e1e1e;font-size:.85rem}
+.st b{color:var(--accent)}
+.loading{display:flex;align-items:center;gap:1rem;margin-top:2rem;font-family:'Courier New',monospace;font-size:.85rem;color:var(--muted)}
+.bar{width:160px;height:4px;background:#1a1a1a;border-radius:4px;overflow:hidden;position:relative}
+.bar i{position:absolute;left:0;top:0;height:100%;width:73%;background:linear-gradient(90deg,var(--accent),var(--accent2));animation:ld 3s ease infinite}
+@keyframes ld{0%,100%{width:40%}50%{width:85%}}
+.egg{margin-top:4rem;text-align:center;font-size:.8rem;color:#333;cursor:pointer;transition:.3s}
+.egg:hover{color:var(--accent)}
+.egg-msg{max-height:0;overflow:hidden;transition:max-height .6s ease;color:var(--accent2);font-size:.9rem}
+.egg-msg.open{max-height:200px;margin-top:1rem}
+footer{text-align:center;padding:4rem 1rem 2rem;color:#333;font-size:.75rem;letter-spacing:.25em;text-transform:uppercase}
+.reveal{opacity:0;transform:translateY(40px);transition:1s cubic-bezier(.2,.8,.2,1)}
+.reveal.on{opacity:1;transform:translateY(0)}
+</style>
+</head>
+<body>
+<div class="spotlight" id="spot"></div>
+<div class="glow g1"></div>
+<div class="glow g2"></div>
+<div class="glow g3"></div>
+<div class="wrap">
+
+<div class="top-links">
+<a class="twitch" href="https://twitch.tv/lizos_ssk" target="_blank"><svg viewBox="0 0 24 24"><path d="M11.571 4.714h1.715v5.143H11.57zm4.715 0H18v5.143h-1.714zM6 0L1.714 4.286v15.428h5.143V24l4.286-4.286h3.428L22.286 12V0zm14.571 11.143l-3.428 3.428h-3.429l-3 3v-3H6.857V1.714h13.714Z"/></svg>Twitch</a>
+<a class="tg" href="https://t.me/lizos_ssk" target="_blank"><svg viewBox="0 0 24 24"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg>Telegram</a>
+<a class="dm" href="https://t.me/lizos_ssk_priv" target="_blank"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2a7.2 7.2 0 0 1-6-3.22c.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08a7.2 7.2 0 0 1-6 3.22z"/></svg>Личка</a>
+</div>
+
+<section class="hero">
+<div class="eyebrow">stream · community · lifestyle</div>
+<div class="hero-title">
+<h1>lizos<br>ssk</h1>
+<div class="hero-photo" id="photoTop">
+<img src="liza.jpg" alt="Лиза" onerror="this.remove(); document.getElementById('photoTop').innerHTML='<span>Лиза</span>';">
+</div>
+</div>
+<div class="sub">Стример, который превращает эфиры в большое комьюнити и в собственный стиль. Здесь — про неё.</div>
+<div class="crown">♛ Королева Доты ♛</div>
+
+<div class="lamp">
+<div class="lamp-text">Лиза, мы тебя любим 💛</div>
+<span class="hint">▸ посвети сюда</span>
+</div>
+
+<a href="meyn.html" class="btn-meyn">В доработке →</a>
+</section>
+
+<div class="saturn">
+<div class="ring ring-1" id="ring1"></div>
+<div class="ring ring-2" id="ring2"></div>
+<div class="saturn-photo" id="photoOrbit">
+<img src="liza1.jpg" alt="Лиза" onerror="this.remove(); document.getElementById('photoOrbit').innerHTML='<span>L</span>';">
+</div>
+</div>
+
+<section class="block reveal">
+<span class="num">01 — Кто она</span>
+<h2>Лиза.<br>И это <em>её</em> мир.</h2>
+<p>lizos_ssk — стример, который создал вокруг себя не просто аудиторию, а настоящее сообщество. Здесь каждый чувствует себя своим: через открытый диалог, разнообразие контента, импровизацию и постоянный контакт со зрителями.</p>
+<p><em>Королева Доты</em> — не просто титул. Это стиль игры, харизма и атмосфера, которую она создаёт в каждом матче.</p>
+<div class="words"><span>Искренность</span><span>Харизма</span><span>Импровизация</span><span>Свой вайб</span><span>Комьюнити</span><span>Королева Доты</span></div>
+</section>
+
+<section class="block reveal">
+<span class="num">02 — Цифры</span>
+<h2>Не просто <em>слова</em></h2>
+<div class="stats">
+<div class="stat"><div class="val" data-count="500">0</div><div class="lbl">эфиров</div></div>
+<div class="stat"><div class="val" data-count="5000">0</div><div class="lbl">стабильно 3–5К</div></div>
+<div class="stat"><div class="val" data-count="1200">0</div><div class="lbl">часов в эфире</div></div>
+<div class="stat"><div class="val" data-count="365">0</div><div class="lbl">дней вместе</div></div>
+</div>
+</section>
+
+<section class="block reveal">
+<span class="num">03 — Стиль</span>
+<h2>Не формат.<br><em>Состояние.</em></h2>
+<p>Трансляции Лизы — это не просто игры. Это разговор, настроение, привычка быть собой и поддерживать других. Каждый эфир — маленькая история, которую она пишет вместе со зрителями.</p>
+<p>Энергия, баланс и честность — три вещи, которые она несёт в каждый стрим.</p>
+</section>
+
+<section class="block reveal">
+<span class="num">04 — Путь</span>
+<h2>Как всё <em>начиналось</em></h2>
+<div class="timeline">
+<div class="tl-item"><div class="year">Начало</div><div class="txt">Первый эфир — <b>волнение, тишина и пара зрителей.</b> Но уже тогда стало понятно: это не разово.</div></div>
+<div class="tl-item"><div class="year">Рост</div><div class="txt">Появилось <b>ядро комьюнити</b> — те, кто приходит не на игру, а на атмосферу.</div></div>
+<div class="tl-item"><div class="year">Сейчас</div><div class="txt">Лиза — <b>стример с собственным стилем</b>, узнаваемым голосом и людьми, которые рядом.</div></div>
+<div class="tl-item"><div class="year">Дальше</div><div class="txt"><b>Только вперёд.</b> Новые форматы, новые истории, то же комьюнити.</div></div>
+</div>
+</section>
+
+<section class="block reveal">
+<span class="num">05 — Комьюнити</span>
+<h2>LIZOS CREW</h2>
+<p>Близкий круг, который стал частью общей истории.</p>
+<div class="grid">
+<div class="card"><div class="nick">lizos_ssk</div><div class="role">лиза · королева доты</div></div>
+<div class="card"><div class="nick">moonlight</div><div class="role">даша</div></div>
+<div class="card"><div class="nick">kirill_ok</div><div class="role">кирилл</div></div>
+<div class="card"><div class="nick">vika_play</div><div class="role">вика</div></div>
+<div class="card"><div class="nick">artem_zzz</div><div class="role">артём</div></div>
+<div class="card"><div class="nick">nastya_love</div><div class="role">настя</div></div>
+<div class="card"><div class="nick">roma_gg</div><div class="role">рома</div></div>
+<div class="card"><div class="nick">sonya_vibe</div><div class="role">соня</div></div>
+<div class="card"><div class="nick">maxim_pro</div><div class="role">максим</div></div>
+<div class="card"><div class="nick">lera_sun</div><div class="role">лера</div></div>
+</div>
+</section>
+
+<section class="block reveal">
+<span class="num">06 — Статусы</span>
+<h2>Что сейчас</h2>
+<div class="statuses">
+<div class="st">настроение — <b>раздавать</b></div>
+<div class="st">скука — <b>ликвидирована</b></div>
+<div class="st">режим — <b>в эфире</b></div>
+<div class="st">статус — <b>королева доты</b></div>
+</div>
+<div class="loading"><span>LOADING</span><div class="bar"><i></i></div><span>73%</span></div>
+</section>
+
+<div class="egg" id="egg">▸ нажми, если любопытно</div>
+<div class="egg-msg" id="eggMsg">Спасибо, что ты здесь. Такие сайты делаются не ради галочки, а ради народных стримеров. 💛</div>
+<footer>© 2026 · lizos_ssk · королева доты</footer>
+</div>
+
+<script>
+var spot=document.getElementById('spot');
+document.addEventListener('mousemove',function(e){spot.style.left=e.clientX+'px';spot.style.top=e.clientY+'px'});
+document.addEventListener('touchmove',function(e){var t=e.touches[0];spot.style.left=t.clientX+'px';spot.style.top=t.clientY+'px'},{passive:true});
+var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting)e.target.classList.add('on')})},{threshold:.15});
+document.querySelectorAll('.reveal').forEach(function(el){io.observe(el)});
+var counters=document.querySelectorAll('[data-count]');
+var cio=new IntersectionObserver(function(es){es.forEach(function(e){if(!e.isIntersecting)return;var el=e.target,t=+el.dataset.count,c=0,s=t/60;var tick=function(){c+=s;if(c<t){el.textContent=Math.floor(c);requestAnimationFrame(tick)}else{el.textContent=t>=1000?(t/1000)+'K':t}};tick();cio.unobserve(el)})},{threshold:.5});
+counters.forEach(function(el){cio.observe(el)});
+var ring1=document.getElementById('ring1'),ring2=document.getElementById('ring2');
+var r1=150,r2=230;
+var w1=['я бустер','Отлижи','1000гпм','раки','пацаны'];
+w1.forEach(function(text,i){var el=document.createElement('div');el.className='word';el.innerHTML='<span>'+text+'</span>';var a=(360/w1.length)*i;el.style.transform='translate(-50%,-50%) rotate('+a+'deg) translateX('+r1+'px) rotate(-'+a+'deg)';el.style.left='50%';el.style.top='50%';ring1.appendChild(el)});
+var w2=['ты видел','Фастовый БФ','зеленые треугольники','смотри','я лох или норм','клянусь очком','да в падлу чета'];
+w2.forEach(function(text,i){var el=document.createElement('div');el.className='word';el.innerHTML='<span>'+text+'</span>';var a=(360/w2.length)*i;el.style.transform='translate(-50%,-50%) rotate('+a+'deg) translateX('+r2+'px) rotate(-'+a+'deg)';el.style.left='50%';el.style.top='50%';ring2.appendChild(el)});
+document.getElementById('egg').addEventListener('click',function(){document.getElementById('eggMsg').classList.toggle('open')});
+</script>
+</body>
+</html>
